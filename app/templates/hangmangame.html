@@ -1,0 +1,177 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'estilo.css' %}">
+    <title>Jogo</title>
+</head>
+
+<body>
+    {% csrf_token %}
+    <button style="width: fit-content; margin: 0;" class="butao" onclick="voltar()">Voltar</button>
+    <h2 class="titulo2">Bem vindo(a) {{ nome }}</h2>
+
+    <h1 class="titulo1">Hangman Game</h1>
+    <div class="flex">
+        <div>
+            <p class="insira" style="margin-bottom: 30rem; margin-right: 5rem;">Dica: {{ dica }}</p>
+        </div>
+        <div class="box1">
+            <p class="palavra" id="palavra_oculta">
+
+            </p>
+            <form class="formulario" style="flex-direction: row;" id="some_form">
+                <input class="usuario" style="width: 1rem; font-size: 1.1rem; margin-top: 1rem;" type="text"
+                    id="tentativa" maxlength="1">
+                <button class="butao" style="width: fit-content; margin-top: 1rem; margin-left: 2rem;" id="butao"
+                    onclick="enviarTentativa()">Enviar Tentativa</button>
+            </form>
+            <p id="tentativas_restantes"></p>
+
+            <p id="mensagem">{{ message }}</p>
+
+            <div id="UT">Letras tentadas: </div>
+
+            <form id="formula" method="post" enctype="multipart/form-data" style="display: none;">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="a">Vai lá</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function voltar() {
+            const voltar = window.confirm('Tem certeza que quer voltar? Seu progresso será perdido.')
+            if (voltar == true) {
+                localStorage.setItem('seq', 0);
+                window.location.href = '{% url "index" %}';
+            }
+        }
+
+        if (!localStorage.getItem('Palavra')) {
+            localStorage.setItem('Palavra', '{{ palavraP }}');
+        }
+        if (!localStorage.getItem('Dica')) {
+            localStorage.setItem('Dica', '{{ dica }}');
+        }
+
+        if (!localStorage.getItem('seq')) {
+            localStorage.setItem('seq', 0);
+        }
+        let seq = localStorage.getItem('seq');
+        parseInt(seq);
+
+        //Esse trem aq evita que o formulário recarregue a página, não apaga essa bomba nn.
+        const form = document.getElementById('some_form');
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+        })
+
+        let formula = document.getElementById('formula')
+        let formulario = document.getElementsByClassName('texto');
+
+        formulario[0].value = '{{ nome }}';
+        formulario[1].value = seq;
+
+        const XLAPOSBNCJHSB = localStorage.getItem('Palavra');
+        const Adica = localStorage.getItem('Dica');
+        const campoDica = document.getElementsByClassName('insira')[0];
+        const XASJBCAKJJSCY = XLAPOSBNCJHSB.split('');
+        let tentativaAtual = Array(XASJBCAKJJSCY.length).fill('_');
+        let tentativasRestantes = 3;
+        const divUT = document.getElementById('UT');
+        const divPalavraOculta = document.getElementById('palavra_oculta');
+        const but = document.getElementById('butao');
+        const inputTentativa = document.getElementById('tentativa');
+        const pTentativasRestantes = document.getElementById('tentativas_restantes');
+        const pMensagem = document.getElementById('mensagem');
+
+        campoDica.textContent = `Dica: ${Adica}`
+
+        function imprimir_palavra() {
+            divPalavraOculta.textContent = tentativaAtual.join(' ');
+        }
+
+        function enviarTentativa() {
+            const letraTentativa = inputTentativa.value.toUpperCase();
+
+            if (letraTentativa.length === 0) {
+                pMensagem.textContent = 'Por favor, insira uma letra.';
+                pMensagem.className = ''; // Remove qualquer classe anterior
+                return;
+            }
+
+            if (tentativaAtual.includes(letraTentativa) || !XLAPOSBNCJHSB.includes(letraTentativa)) {
+                pTentativasRestantes.textContent = `Tentativas restantes: ${tentativasRestantes}`;
+                tentativasRestantes--;
+                divUT.textContent += `${letraTentativa}, `;
+                pMensagem.textContent = 'Letra incorreta.';
+                pMensagem.className = 'erro'; // Adiciona a classe de erro
+                inputTentativa.value = '';
+
+                if (tentativasRestantes === 0) {
+                    but.setAttribute('disabled', 'true');
+
+                    localStorage.setItem('seq', 0);
+                    localStorage.removeItem('Dica');
+                    localStorage.removeItem('Palavra');
+                    formulario[0].value = '{{ nome }}';
+                    formulario[1].value = seq;
+
+                    for (let i = 3; i >= 0; i--) {
+                        setTimeout(() => {
+                            pMensagem.textContent = `Perdeu. Próxima palavra em ${i} segundos... AGUARDE`;
+                            if (i === 0) {
+                                formula.submit();
+                            }
+                        }, (3 - i) * 1000);
+                    }
+                }
+                return;
+            } else {
+                tentativasRestantes++;
+                divUT.textContent += `${letraTentativa}, `;
+                pTentativasRestantes.textContent = `Tentativas restantes: ${tentativasRestantes}`;
+                pMensagem.textContent = 'Letra correta.';
+                pMensagem.className = 'sucesso'; // Adiciona a classe de sucesso
+            }
+
+            for (let i = 0; i < XASJBCAKJJSCY.length; i++) {
+                if (XASJBCAKJJSCY[i] === letraTentativa) {
+                    tentativaAtual[i] = letraTentativa;
+                }
+            }
+
+            imprimir_palavra();
+
+            if (!tentativaAtual.includes('_')) {
+                pMensagem.textContent = 'Parabéns! Você acertou a palavra!';
+                pMensagem.className = 'sucesso'; // Adiciona a classe de sucesso
+                but.setAttribute('disabled', 'true');
+                seq = parseInt(seq) + 1;
+                localStorage.setItem('seq', seq);
+                localStorage.removeItem('Dica');
+                localStorage.removeItem('Palavra');
+                for (let i = 3; i >= 0; i--) {
+                    setTimeout(() => {
+                        pMensagem.textContent = `Vitória!!! Próxima palavra em ${i} segundos...`;
+                        if (i === 0) {
+                            window.location.reload();
+                        }
+                    }, (3 - i) * 1000);
+                }
+            }
+
+            inputTentativa.value = '';
+            inputTentativa.focus();
+        }
+
+
+        imprimir_palavra();
+    </script>
+</body>
+
+</html>

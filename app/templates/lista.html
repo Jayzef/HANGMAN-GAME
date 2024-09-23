@@ -1,0 +1,114 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'estilo.css' %}">
+</head>
+
+<body> 
+        <a href="{% url 'index' %}"><button class="butao" style="width: 12rem; margin: 0;">Voltar</button></a>
+
+    <h1 class="titulo1" style="margin-bottom: -5rem;">Listas</h1>
+    <div class="box">
+
+        <!-- Tabela de Palavras -->
+        <div>
+            <h2 class="titulo2" style="padding: 2rem 4rem 2rem 4rem; font-size: 2rem;">Palavras</h2>
+            <a href="{% url 'inserir' %}"><button class="butao" style="width: 17rem; margin: 0;">Inserir Palavras</button></a>
+        </div>
+        <table class="tabela" style="width: 70%;margin-right: 10rem;">
+            <thead>
+                <tr>
+                    <th class="lin">ID</th>
+                    <th class="lin">
+                        <h2>Palavra</h2>
+                    </th>
+                    <th class="lin">
+                        <h2>Categoria</h2>
+                    </th>
+                    <th class="lin">
+                        <h2>Dica</h2>
+                    </th>
+                    <th class="lin">
+                        <h2>Ações</h2>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for palavra in palavras %}
+                <tr>
+                    <td class="lin2">{{ palavra.id }}</td>
+                    <td class="lin2">{{ palavra.palavra }}</td>
+                    <td class="lin2">{{ palavra.CDP.NDC }}</td> <!-- Acessando o campo da ForeignKey -->
+                    <td class="lin2">{{ palavra.dica }}</td>
+                    <td class="lin2"><a href="{% url 'deletePalavra' palavra.id %}" class="button">Excluir</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Tabela de Usuários -->
+        <h2 class="titulo2" style="padding: 2rem 4rem 2rem 4rem; font-size: 2rem;">Usuários</h2>
+        <table class="tabela" style="width: 70%;margin-right: 10rem;">
+            <thead>
+                <tr>
+                    <th class="lin">ID</th>
+                    <th class="lin">
+                        <h2>Nome</h2>
+                    </th>
+                    <th class="lin">
+                        <h2>Senha</h2>
+                    </th>
+                    <th class="lin">
+                        <h2>Ações</h2>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for jogador in jogadores %}
+                <tr>
+                    <td class="lin2">{{ jogador.id }}</td>
+                    <td class="lin2">{{ jogador.nome }}</td>
+                    <td class="lin2">{{ jogador.senha }}</td>
+                    <td class="lin2"><a href="{% url 'deleteUsuario' jogador.id %}" class="button">Excluir</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Tabela de Jogos -->
+        <h2 class="titulo2" style="padding: 2rem 4rem 2rem 4rem; font-size: 2rem;">Jogos</h2>
+        <table class="tabela" style="width: 70%;margin-right: 10rem;">
+            <thead>
+                <tr>
+                    <th class="lin">ID</th>
+                    <th class="lin">
+                        <h2>Jogador</h2>
+                    </th>
+                    <th class="lin">
+                        <h2>Sequência</h2>
+                    </th>
+                    <th class="lin">
+                        <h2>Ações</h2>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for jogo in jogos %}
+                <tr>
+                    <td class="lin2">{{ jogo.id }}</td>
+                    <td class="lin2">{{ jogo.jogador }}</td>
+                    <td class="lin2">{{ jogo.sequencia }}</td>
+                    <td class="lin2"><a href="{% url 'deleteJogo' jogo.id %}" class="button">Excluir</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

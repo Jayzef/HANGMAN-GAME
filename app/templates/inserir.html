@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inserir Palavra</title>
+    <link rel="stylesheet" href="{% static 'estilo.css' %}">
+</head>
+<body>
+    <a href="{% url 'lista' %}"><button class="butao" style="margin: 0; width: 12rem;">Voltar</button></a>
+    <h1 class="titulo2">Adicionar Palavras</h1>
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li class="erro">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <form enctype="multipart/form-data" method="post" class="formulario">
+        {% csrf_token %}
+        {{ form1.as_p }}
+        <button type="submit" class="butao" style="width: 12rem;">Adicionar</button>
+    </form>
+    <br>
+    <hr>
+    <br>
+    <h1 class="titulo2">Adicionar Palavras</h1>
+    <form enctype="multipart/form-data" method="post" class="formulario">
+        {% csrf_token %}
+        {{ form2.as_p }}
+        <button type="submit" class="butao" style="width: 12rem;">Adicionar</button>
+    </form>
+</body>
+</html>

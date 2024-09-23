@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Senha</title>
+    <link rel="stylesheet" href="{% static 'estilo.css' %}">
+</head>
+<body>
+    <h1 class="titulo2">Senha</h1>
+    <form class="formulario" method="post">
+        <p class="insira">Insira o usuário e a senha</p>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="butao" style="width: 12rem;">Entrar</button>
+        <p>{{ ADM }}</p>
+</body>
+</html>

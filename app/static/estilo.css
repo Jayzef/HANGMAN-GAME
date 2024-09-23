@@ -1,0 +1,221 @@
+@font-face {
+    font-family: 'Super';
+    src: url('Super\ Squad\ Italic.otf') format('opentype'), url('Super\ Squad\ Italic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+
+@keyframes tremer{
+    0%, 100% {
+        transform: translateX(0);
+    }
+    20%, 60% {
+        transform: translateX(-5px);
+    }
+    40%, 80% {
+        transform: translateX(5px);
+    }
+}
+
+@keyframes pular {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    20% {
+        transform: translateY(-5px);
+    }
+    40% {
+        transform: translateY(0);
+    }
+    60% {
+        transform: translateY(-3px);
+    }
+    80% {
+        transform: translateY(0);
+    }
+}
+
+body{
+    background-color: #E6EAF4;
+}
+
+.box{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+    align-items: center;
+    gap: 10rem;
+    margin-top: 10rem;
+}
+
+.box1{
+    display: flex;
+    justify-items: center;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.titulo1{
+    font-family: 'Super', sans-serif;
+    font-size: 4rem;
+    color: #8CA9F5;
+    text-shadow: 5px 5px black;
+    text-align: center;
+}
+
+.titulo2{
+    background-color: #8F8CF5;
+    padding: 1rem 2rem 1rem 2rem;
+    border: 2px solid black;
+    box-shadow: 3px 3px 0 black;
+    width: fit-content;
+    font-family: "Source Code Pro", monospace;
+}
+
+.butao{
+    background-color: #8CA9F5;
+    padding: 1rem 2rem 1rem 2rem;
+    border-radius: 1.2rem;
+    box-shadow: 3px 3px 0 black;
+    font-family: "Source Code Pro", monospace;
+    font-weight: 900;
+    font-style: bold;
+    font-size: 1.3rem;
+    margin-top: 3rem;
+}
+
+.sucesso{
+    margin-top: -2rem;
+    font-family: "Source Code Pro", monospace;
+    font-style: italic;
+    background-color: #50be71;
+    padding: 1rem 2rem 1rem 2rem;
+    border: 2px solid black;
+    box-shadow: 3px 3px 0 black;
+    list-style-type: none;
+    animation: pular 0.5s ease-in-out;
+}
+
+.erro{
+    margin-top: -2rem;
+    font-family: "Source Code Pro", monospace;
+    font-style: italic;
+    background-color: #be5059;
+    padding: 1rem 2rem 1rem 2rem;
+    border: 2px solid black;
+    box-shadow: 3px 3px 0 black;
+    list-style-type: none;
+    animation: tremer 0.5s ease-in-out;
+}
+
+.insira{
+    font-family: "Source Code Pro", monospace;
+    font-weight: 900;
+    background-color: #8F8CF5;
+    padding: 1rem 2rem 1rem 2rem;
+    border: 2px solid black;
+    box-shadow: 3px 3px 0 black;
+    width: fit-content;
+}
+
+.palavra{
+    font-family: "Source Code Pro", monospace;
+    font-style: bold;
+    font-size: 3rem;
+    text-shadow: 1px 1px 2px 2px black;
+}
+
+.butao:hover{
+    box-shadow: 3px 3px 0 black inset;
+    background-color: #7895df;
+}
+
+.tabelacortada {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 4px 4px black;
+}
+
+.tabela {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: black 0.1rem solid;
+    margin-left: 4px;
+    margin-top: 4px;
+    font-family: "Source Code Pro", monospace;
+    font-size: 1.1rem;
+}
+tr:nth-child(even) {
+    background-color: #b7d6eb;
+}
+
+.tabela td, .tabela th {
+    padding: 1rem 2rem;
+    border: black 0.1rem solid;
+}
+
+.tabela thead {
+    background-color: #8CA9F5;
+}
+
+.formulario{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.formulario label{
+    font-family: "Source Code Pro", monospace;
+    font-weight: 900;
+}
+
+.formulario input{
+    padding: 1rem 2rem 1rem 2rem;
+    border-radius: 1rem;
+    box-shadow: 2px 2px black;
+    border: solid 2px black;
+}
+
+.formulario select{
+    padding: 1rem 2rem 1rem 2rem;
+    border-radius: 1rem;
+    box-shadow: 2px 2px black;
+    border: solid 2px black;
+}
+
+#mensagem, #tentativas_restantes{
+    font-family: "Source Code Pro", monospace;
+    font-style: bold;
+    font-size: 1.2rem;
+}
+
+#tentativas_restantes{
+    background-color: #8F8CF5;
+    padding: 1rem 2rem 1rem 2rem;
+    border: 2px solid black;
+    box-shadow: 3px 3px 0 black;
+    width: fit-content;
+}
+
+#UT{
+    font-family: "Source Code Pro", monospace;
+    font-weight: 900;
+    background-color: #8F8CF5;
+    padding: 1rem 2rem 1rem 2rem;
+    border: 2px solid black;
+    box-shadow: 3px 3px 0 black;
+    width: fit-content;
+}
+
+.flex{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10rem;
+}

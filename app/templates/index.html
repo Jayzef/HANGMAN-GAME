@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Hangman Game</title>
+    <link rel="stylesheet" href="{% static 'estilo.css' %}">
+</head>
+
+<body>
+    <a href="{% url 'lista' %}"><button class="butao" style="margin: 0; width: 12rem;">Palavras</button></a>
+    <h1 class="titulo1">Hangman Game</h1>
+
+    <div class="box">
+        <form class="formulario" method="post" enctype="multipart/form-data">
+            {% if messages %}
+            <ul>
+                {% for message in messages %}
+                {% if message.tags == "success" %}
+                <li class="sucesso">{{ message }}</li>
+                {% elif message.tags == "error" %}
+                <li class="erro">{{ message }}</li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+            {% endif %}
+            <p class="insira">Insira suas informações: </p>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" style="width: fit-content;" class="butao">Jogar</button>
+            <p class="insira" style="text-align: justify; margin-top: 5rem;">
+                Hangman Game é um simples jogo da forca para a web. Registre-se e
+                obtenha a maior sequência de acertos possível para aparecer no ranking!
+                Seu nome e sequência aparecerão no ranking somente quando errar alguma palavra.
+            </p>
+        </form>
+
+        <div class="tabelacortada">
+            <table class="tabela">
+                <thead>
+                    <tr>
+                        <th>Ranking</th>
+                        <th>Nome</th>
+                        <th>Última Sequência</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for rank in rank %}
+                    <tr>
+                        <td>{{ forloop.counter }}º</td>
+                        <td>{{ rank.jogador }}</td>
+                        <td>{{ rank.sequencia }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="flex">
+
+    </div>
+</body>
+
+</html>
